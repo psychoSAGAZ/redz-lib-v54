@@ -9,22 +9,6 @@ local Player = Players.LocalPlayer
 local PlayerMouse = Player:GetMouse()
 
 local MyLibrary = {
---// THEME SYSTEM (V4 STYLE)
-
-MyLibrary.ThemeObjects = {
-    Frames = {},
-    Text = {},
-    Stroke = {},
-    Theme = {},
-    Toggle = {}
-}
-
-function MyLibrary:RegisterTheme(Object, Category)
-    if MyLibrary.ThemeObjects[Category] then
-        table.insert(MyLibrary.ThemeObjects[Category], Object)
-    end
-    return Object
-end
 	Themes = {
 			Darker = {
 			["Color Hub 1"] = ColorSequence.new({
@@ -71,6 +55,22 @@ end
 		TabSize = 160,
 		Theme = "Purple"
 	},
+	--// THEME SYSTEM (V4 STYLE)
+
+MyLibrary.ThemeObjects = {
+    Frames = {},
+    Text = {},
+    Stroke = {},
+    Theme = {},
+    Toggle = {}
+}
+
+function MyLibrary:RegisterTheme(Object, Category)
+    if MyLibrary.ThemeObjects[Category] then
+        table.insert(MyLibrary.ThemeObjects[Category], Object)
+    end
+    return Object
+end
 	Settings = {},
 	Connection = {},
 	Instances = {},
