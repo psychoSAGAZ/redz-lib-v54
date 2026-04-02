@@ -2712,5 +2712,50 @@ end
 	MinimizeButton.Activated:Connect(Window.MinimizeBtn)
 	return Window
 end
+--// AUTO THEME SYSTEM (V4 STYLE)
+
+local function ApplyTheme(themeName)
+
+    local Theme = MyLibrary.Themes[themeName]
+    if not Theme then return end
+
+    local CoreGui = game:GetService("CoreGui")
+    local Hub = CoreGui:FindFirstChild("SAGAZx HUB")
+
+    if not Hub then return end
+
+    for _,obj in ipairs(Hub:GetDescendants()) do
+
+        -- Frames
+        if obj:IsA("Frame") or obj:IsA("ScrollingFrame") then
+            obj.BackgroundColor3 = Theme["Color Hub 2"]
+        end
+
+        -- Text
+        if obj:IsA("TextLabel") or obj:IsA("TextButton") then
+            obj.TextColor3 = Theme["Color Text"]
+        end
+
+        -- Stroke
+        if obj:IsA("UIStroke") then
+            obj.Color = Theme["Color Stroke"]
+        end
+
+        -- Accent
+        if obj.Name:lower():find("toggle")
+        or obj.Name:lower():find("slider")
+        or obj.Name:lower():find("active") then
+            obj.BackgroundColor3 = Theme["Color Theme"]
+        end
+    end
+end
+
+
+function MyLibrary:SetThemeV4(theme)
+    MyLibrary.Save.Theme = theme
+    task.wait()
+    ApplyTheme(theme)
+end
+
 
 return MyLibrary
