@@ -55,22 +55,7 @@ local MyLibrary = {
 		TabSize = 160,
 		Theme = "Purple"
 	},
-	--// THEME SYSTEM (V4 STYLE)
 
-MyLibrary.ThemeObjects = {
-    Frames = {},
-    Text = {},
-    Stroke = {},
-    Theme = {},
-    Toggle = {}
-}
-
-function MyLibrary:RegisterTheme(Object, Category)
-    if MyLibrary.ThemeObjects[Category] then
-        table.insert(MyLibrary.ThemeObjects[Category], Object)
-    end
-    return Object
-end
 	Settings = {},
 	Connection = {},
 	Instances = {},
@@ -901,6 +886,23 @@ end
 		}
 	end)()
 }
+
+--// THEME SYSTEM (V4 STYLE)
+
+MyLibrary.ThemeObjects = {
+    Frames = {},
+    Text = {},
+    Stroke = {},
+    Theme = {},
+    Toggle = {}
+}
+
+function MyLibrary:RegisterTheme(Object, Category)
+    if MyLibrary.ThemeObjects[Category] then
+        table.insert(MyLibrary.ThemeObjects[Category], Object)
+    end
+    return Object
+end
 
 local ViewportSize = workspace.CurrentCamera.ViewportSize
 local UIScale = ViewportSize.Y / 450
