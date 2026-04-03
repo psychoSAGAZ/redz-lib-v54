@@ -55,7 +55,6 @@ local MyLibrary = {
 		TabSize = 160,
 		Theme = "Purple"
 	},
-
 	Settings = {},
 	Connection = {},
 	Instances = {},
@@ -886,23 +885,6 @@ local MyLibrary = {
 		}
 	end)()
 }
-
---// THEME SYSTEM (V4 STYLE)
-
-MyLibrary.ThemeObjects = {
-    Frames = {},
-    Text = {},
-    Stroke = {},
-    Theme = {},
-    Toggle = {}
-}
-
-function MyLibrary:RegisterTheme(Object, Category)
-    if MyLibrary.ThemeObjects[Category] then
-        table.insert(MyLibrary.ThemeObjects[Category], Object)
-    end
-    return Object
-end
 
 local ViewportSize = workspace.CurrentCamera.ViewportSize
 local UIScale = ViewportSize.Y / 450
@@ -2712,50 +2694,36 @@ end
 	MinimizeButton.Activated:Connect(Window.MinimizeBtn)
 	return Window
 end
---// AUTO THEME SYSTEM (V4 STYLE)
 
-local function ApplyTheme(themeName)
+return MyLibrary
 
-    local Theme = MyLibrary.Themes[themeName]
-    if not Theme then return end
+--// ===========================
+--//  THEME SYSTEM (ADDED)
+--// ===========================
 
-    local CoreGui = game:GetService("CoreGui")
-    local Hub = CoreGui:FindFirstChild("SAGAZx HUB")
+function MyLibrary:SetTheme(themeName)
+    local theme = self.Themes[themeName]
+    if not theme then
+        warn("Theme not found:", themeName)
+        return
+    end
 
-    if not Hub then return end
+    self.Save.Theme = themeName
 
-    for _,obj in ipairs(Hub:GetDescendants()) do
-
-        -- Frames
-        if obj:IsA("Frame") or obj:IsA("ScrollingFrame") then
-            obj.BackgroundColor3 = Theme["Color Hub 2"]
-        end
-
-        -- Text
-        if obj:IsA("TextLabel") or obj:IsA("TextButton") then
-            obj.TextColor3 = Theme["Color Text"]
-        end
-
-        -- Stroke
-        if obj:IsA("UIStroke") then
-            obj.Color = Theme["Color Stroke"]
-        end
-
-        -- Accent
-        if obj.Name:lower():find("toggle")
-        or obj.Name:lower():find("slider")
-        or obj.Name:lower():find("active") then
-            obj.BackgroundColor3 = Theme["Color Theme"]
+    for _,obj in pairs(self.Instances) do
+        if typeof(obj) == "Instance" then
+            if obj.Name == "HubGradient" and obj:IsA("UIGradient") then
+                obj.Color = theme["Color Hub 1"]
+            elseif obj.Name == "HubBackground" and obj:IsA("Frame") then
+                obj.BackgroundColor3 = theme["Color Hub 2"]
+            elseif obj.Name == "HubStroke" and obj:IsA("UIStroke") then
+                obj.Color = theme["Color Stroke"]
+            elseif obj.Name == "ThemeColor" and obj:IsA("Frame") then
+                obj.BackgroundColor3 = theme["Color Theme"]
+            elseif obj:IsA("TextLabel") or obj:IsA("TextButton") then
+                obj.TextColor3 = theme["Color Text"]
+            end
         end
     end
 end
 
-
-function MyLibrary:SetThemeV4(theme)
-    MyLibrary.Save.Theme = theme
-    task.wait()
-    ApplyTheme(theme)
-end
-
-
-return MyLibrary
