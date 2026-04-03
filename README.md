@@ -2695,8 +2695,6 @@ end
 	return Window
 end
 
-return MyLibrary
-
 --// ===========================
 --//  THEME SYSTEM (ADDED)
 --// ===========================
@@ -2727,3 +2725,4 @@ function MyLibrary:SetTheme(themeName)
     end
 end
 
+return MyLibrary
